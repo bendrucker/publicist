@@ -25,13 +25,28 @@ commander
   .description('Set a specific version or increment by a specified type')
   .action(function (version) {
     var cwd = process.cwd();
-    return Promise.all([
-      'package.json',
-      'bower.json'
-    ])
+    return Promise
     .bind({
       paths: []
     })
+    .then(function () {
+      return git('fetch');
+    })
+    .then(function () {
+      return git('checkout', 'release');
+    })
+    .catch(function (err) {
+      return /pathspec 'release' did not match/.test(err.message);
+    }, function () {
+      return git('checkout', '-b', 'release');
+    })
+    .then(function () {
+      return git('merge', 'master');
+    })
+    .return([
+      'package.json',
+      'bower.json'
+    ])
     .map(function (pkg, i) {
       var p = path.join(cwd, pkg);
       this.paths[i] = p;
@@ -59,20 +74,6 @@ commander
       return fs.writeFileAsync(pkg.path, pkg.data + '\n');
     })
     .then(function () {
-      return git('fetch');
-    })
-    .then(function () {
-      return git('checkout', 'release');
-    })
-    .catch(function (err) {
-      return /pathspec 'release' did not match/.test(err.message);
-    }, function () {
-      return git('checkout', '-b', 'release');
-    })
-    .then(function () {
-      return git('merge', 'master');
-    })
-    .then(function () {
       if (!fs.existsSync('./release')) {
         return fs.mkdirAsync('./release');
       }
@@ -80,7 +81,7 @@ commander
     .then(function () {
       return child.execFileAsync('npm', ['bin'])
         .spread(function (stdout) {
-          return stdout.replace(/\n$/, '')
+          return stdout.replace(/\n$/, '');
         });
     })
     .then(function (binDir) {
