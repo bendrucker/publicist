@@ -1,0 +1,33 @@
+{
+  "name": "browserify-bower-release",
+  "version": "1.0.0",
+  "description": "Generate and tag a UMD build for release on a separate branch",
+  "main": "./src/index.js",
+  "bin": {
+    "release": "./src/index.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bendrucker/browserify-bower-release.git"
+  },
+  "keywords": [
+    "git",
+    "tag",
+    "release",
+    "bower"
+  ],
+  "author": "Ben Drucker <bvdrucker@gmail.com> (http://www.bendrucker.me/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bendrucker/browserify-bower-release/issues"
+  },
+  "homepage": "https://github.com/bendrucker/browserify-bower-release",
+  "dependencies": {
+    "bluebird": "~2.3.6",
+    "commander": "~2.5.0",
+    "semver": "~4.1.0"
+  }
+}
