@@ -70,6 +70,9 @@ commander
       return git('checkout', '-b', 'release');
     })
     .then(function () {
+      return git('merge', 'master');
+    })
+    .then(function () {
       if (!fs.existsSync('./release')) {
         return fs.mkdirAsync('./release');
       }
