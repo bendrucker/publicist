@@ -98,6 +98,12 @@ commander
     .then(function () {
       return git('tag', 'v' + version);
     })
+    .then(function () {
+      return git('checkout', 'master');
+    })
+    .then(function () {
+      return git('merge', 'release');
+    })
     .catch(fail);
   });
 
