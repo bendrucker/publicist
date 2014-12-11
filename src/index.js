@@ -124,6 +124,9 @@ commander
       .then(function () {
         return git('checkout', 'master');
       })
+      .then(function () {
+        return git('branch', '-D', 'release');
+      })
       .catch(fail);
     });
 
