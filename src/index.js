@@ -58,6 +58,7 @@ commander
         var pkg = pkgs[0].data;
         this.main = pkg.main;
         this.name = pkg.name;
+        this.scripts = pkg.scripts;
         // if version is not a version string we assume it's an increment
         if (!semver.valid(version)) {
           version = semver.inc(pkg.version, version);
@@ -109,6 +110,10 @@ commander
       .then(function (binDir) {
         var releasePath = './release/' + this.name + '.js';
         // call the local browserify bin file and generate a bundle
+        if (this.scripts.build) {
+          return child.execFileAsync('npm', ['run', 'build'])
+            .return(releasePath);
+        }
         return child.execFileAsync(binDir + '/browserify', ['-s', this.name, '-e', this.main, '-o', releasePath])
           .return(releasePath);
       })
