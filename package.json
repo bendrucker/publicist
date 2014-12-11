@@ -1,6 +1,6 @@
 {
   "name": "browserify-bower-release",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "Generate and tag a UMD build for release on a separate branch",
   "main": "./src/index.js",
   "bin": {
