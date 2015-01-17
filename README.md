@@ -1,4 +1,4 @@
-browserify-bower-release
+publicist
 ========================
 
 Generate and tag a UMD build for release on a separate branch.

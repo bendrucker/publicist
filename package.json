@@ -1,5 +1,5 @@
 {
-  "name": "browserify-bower-release",
+  "name": "publicist",
   "version": "2.1.0",
   "description": "Generate and tag a UMD build for release on a separate branch",
   "main": "./src/index.js",
@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/bendrucker/browserify-bower-release.git"
+    "url": "https://github.com/bendrucker/publicist.git"
   },
   "keywords": [
     "git",
@@ -22,9 +22,9 @@
   "author": "Ben Drucker <bvdrucker@gmail.com> (http://www.bendrucker.me/)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/bendrucker/browserify-bower-release/issues"
+    "url": "https://github.com/bendrucker/publicist/issues"
   },
-  "homepage": "https://github.com/bendrucker/browserify-bower-release",
+  "homepage": "https://github.com/bendrucker/publicist",
   "dependencies": {
     "bluebird": "~2.3.6",
     "commander": "~2.5.0",
