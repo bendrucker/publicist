@@ -30,7 +30,7 @@
     "commander": "~2.5.0",
     "git-child": "~1.1.0",
     "hat": "0.0.3",
-    "packhorse": "~1.1.0",
+    "packhorse": "~1.1.1",
     "semver": "~4.1.0"
   },
   "peerDependencies": {
