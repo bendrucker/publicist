@@ -3,6 +3,7 @@
 'use strict';
 
 var yargs      = require('yargs');
+var chalk      = require('chalk');
 var semver     = require('semver');
 var Promise    = require('bluebird');
 var fs         = Promise.promisifyAll(require('fs'));
@@ -34,6 +35,7 @@ git.fetch()
   })
   .then(function (pack) {
     version = bump(pack.get('version'), version);
+    log(format('Bumping packages to %s'), chalk.magenta(version));
     return pack.set('version', version).write();
   })
   .tap(function (pack) {
@@ -54,7 +56,7 @@ git.fetch()
     return git.merge('master');
   })
   .tap(ensureReleaseDir)
-  .then(function (pack) {
+  .tap(function (pack) {
     var release = this.release = format('./release/%s.js', pack.get('name'));
     return new Promise(function (resolve, reject) {
       browserify({
@@ -67,15 +69,15 @@ git.fetch()
       .on('close', resolve);
     });
   })
-  .then(function () {
+  .tap(function () {
     return git.add(this.release);
   })
-  .then(function () {
+  .tap(function () {
     return git.commit({
       m: format('v%s UMD bundle', version)
     });
   })
-  .then(function () {
+  .tap(function () {
     return git.tag(format('v%s', version));
   })
   .finally(function () {
@@ -86,11 +88,15 @@ git.fetch()
       D: this.branch
     });
   })
+  .then(function (pack) {
+    log(format('Released %s@%s', pack.get('name'), pack.get('version')));
+  })
   .catch(fail);
 
 function noop () {}
 
 function fail (err) {
+  log(chalk.red('Release failed'));
   console.error(err.stack);
   process.exit(1);
 }
@@ -108,4 +114,8 @@ function randomBranch () {
 
 function bump (from, to) {
   return semver.valid(to) ? to : semver.inc(from, to);
+}
+
+function log () {
+  console.log.apply(console, [chalk.cyan('publicist:')].concat(arguments));
 }
