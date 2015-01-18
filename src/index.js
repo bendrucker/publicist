@@ -73,9 +73,7 @@ commander
         });
       })
       .then(function () {
-        return git.tag({
-          v: format('v%s', version)
-        });
+        return git.tag(format('v%s', version));
       })
       .finally(function () {
         return git.checkout('master');
