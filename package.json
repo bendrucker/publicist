@@ -1,6 +1,6 @@
 {
   "name": "publicist",
-  "version": "2.1.0",
+  "version": "3.0.0",
   "description": "Generate and tag a UMD build for release on a separate branch",
   "main": "./src",
   "bin": {
