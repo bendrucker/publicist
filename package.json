@@ -4,7 +4,7 @@
   "description": "Generate and tag a UMD build for release on a separate branch",
   "main": "./src",
   "bin": {
-    "release": "./src/index.js"
+    "publicist": "./src/index.js"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -34,6 +34,6 @@
     "semver": "~4.1.0"
   },
   "peerDependencies": {
-    "browserify": "~8.1.1"
+    "browserify": "^8.1.1"
   }
 }
