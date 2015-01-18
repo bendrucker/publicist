@@ -76,7 +76,7 @@ commander
           v: format('v%s', version)
         });
       })
-      .then(function () {
+      .finally(function () {
         return git.checkout('master');
       })
       .finally(function () {
