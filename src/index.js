@@ -58,6 +58,7 @@ commander
             standalone: pack.get('name')
           })
           .add(pack.get('main'))
+          .bundle()
           .pipe(release)
           .on('error', reject)
           .on('end', resolve);
