@@ -59,7 +59,7 @@ commander
           })
           .add(pack.get('main'))
           .bundle()
-          .pipe(release)
+          .pipe(fs.createWriteStream(release))
           .on('error', reject)
           .on('end', resolve);
         });
