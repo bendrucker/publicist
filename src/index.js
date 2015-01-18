@@ -52,9 +52,6 @@ git.fetch()
       b: this.branch
     });
   })
-  .tap(function () {
-    return git.merge('master');
-  })
   .tap(ensureReleaseDir)
   .tap(function (pack) {
     var release = this.release = format('./release/%s.js', pack.get('name'));
