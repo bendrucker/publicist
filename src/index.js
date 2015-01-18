@@ -117,5 +117,5 @@ function bump (from, to) {
 }
 
 function log () {
-  console.log.apply(console, [chalk.cyan('publicist:')].concat([].slice.call(arguments));
+  console.log.apply(console, [chalk.cyan('publicist:')].concat([].slice.call(arguments)));
 }
