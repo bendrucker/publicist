@@ -113,7 +113,10 @@ function randomBranch () {
 }
 
 function bump (from, to) {
-  return semver.valid(to) ? to : semver.inc(from, to);
+  if (semver.valid(to)) return to; 
+  var bumped = semver.inc(from, to);
+  if (!bumped) throw new Error('Invalid semver increment');
+  return bumped;
 }
 
 function log () {
