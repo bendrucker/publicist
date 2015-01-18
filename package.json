@@ -4,7 +4,7 @@
   "description": "Generate and tag a UMD build for release on a separate branch",
   "main": "./src",
   "bin": {
-    "publicist": "./src/index.js"
+    "publish": "./src/index.js"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
