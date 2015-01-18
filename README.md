@@ -1,23 +1,39 @@
 publicist
 ========================
 
-Generate and tag a UMD build for release on a separate branch.
+publicist generates and tags a UMD build for releases of code that may be used in a browser outside of CommonJS. It automates a workaround for dealing with Bower and other package managers that use Git repositories instead of storing code in a registry like NPM. If you commit your builds to master, you:
 
-### Usage
+* pollute your commit history
+* spend time fixing PRs where users commit changes to builds
+
+Publicist avoids these issues by tagging commits on a temporary branch. Read more in [How It Works](#how-it-works)
+
+## Installing
 
 ```bash
-$ release release <version | semver-increment>
+# globally
+$ npm install -g publicist
+# locally
+$ npm install publicist
 ```
 
-You should add `releases/` to a `.npmignore` file or otherwise take steps to ensure that it is not needlessly published to npm. 
+## Usage
 
-### Steps
+```bash
+$ publish <version | semver-increment>
+```
 
-* `git checkout master`
-* Update `package.json` and `bower.json` to `version` or increment it by `semver-increment`
-* `git commit` changes with the message `'Release v<version>'`
-* `git checkout` a `release` branch
-* `git merge` changes from `master`
-* Bundle the `main` file with the local `browserify` command as a `standalone` and output it to a `releases` directory
-* `git commit` the bundle with the message `v<version UMD Bundle`
-* `git tag` the release commit
+You should add `release/` to a `.npmignore` file to ensure that it is not needlessly published to npm. 
+
+## How it Works
+
+1. `git checkout master`
+2. Update `package.json` and `bower.json` to `version` or increment it by `semver-increment`
+3. `git commit` changes with the message `'Release v<version>'`
+4. `git checkout` a new `release-*` branch, where `*` is a random string
+6. Bundle the `main` file using browserify as standalone (UMD) bundle and output it to a `./release` directory
+7. `git commit` the bundle with the message `v<version> UMD Bundle`
+8. `git tag` the release commit
+9. `git checkout master` and force-delete the temporary release branch
+
+The end result is a tag that points to a commit that no longer sits on a branch, but will remain in the tree.

@@ -2,9 +2,9 @@
   "name": "publicist",
   "version": "2.1.0",
   "description": "Generate and tag a UMD build for release on a separate branch",
-  "main": "./src/index.js",
+  "main": "./src",
   "bin": {
-    "release": "./src/index.js"
+    "publish": "./src/index.js"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -26,8 +26,13 @@
   },
   "homepage": "https://github.com/bendrucker/publicist",
   "dependencies": {
-    "bluebird": "~2.3.6",
-    "commander": "~2.5.0",
-    "semver": "~4.1.0"
+    "bluebird": "^2.7.1",
+    "browserify": "~8.1.1",
+    "chalk": "~0.5.1",
+    "git-child": "~1.1.0",
+    "hat": "0.0.3",
+    "packhorse": "~1.1.1",
+    "semver": "~4.1.0",
+    "yargs": "~1.3.3"
   }
 }
