@@ -2,7 +2,7 @@
   "name": "publicist",
   "version": "2.1.0",
   "description": "Generate and tag a UMD build for release on a separate branch",
-  "main": "./src/index.js",
+  "main": "./src",
   "bin": {
     "release": "./src/index.js"
   },
@@ -26,7 +26,7 @@
   },
   "homepage": "https://github.com/bendrucker/publicist",
   "dependencies": {
-    "bluebird": "~2.3.6",
+    "bluebird": "^2.3.6",
     "commander": "~2.5.0",
     "git-child": "~1.0.0",
     "hat": "0.0.3",
