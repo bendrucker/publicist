@@ -35,7 +35,7 @@ git.fetch()
   })
   .then(function (pack) {
     version = bump(pack.get('version'), version);
-    log(format('Bumping packages to %s'), chalk.magenta(version));
+    log('Bumping packages to', chalk.magenta(version));
     return pack.set('version', version).write();
   })
   .tap(function (pack) {
@@ -117,5 +117,5 @@ function bump (from, to) {
 }
 
 function log () {
-  console.log.apply(console, [chalk.cyan('publicist:')].concat([].slice.call(arguments)));
+  console.log.apply(console, [format('[%s]:', chalk.cyan('publicist'))].concat([].slice.call(arguments)));
 }
