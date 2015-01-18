@@ -61,7 +61,7 @@ commander
           .bundle()
           .pipe(fs.createWriteStream(release))
           .on('error', reject)
-          .on('end', resolve);
+          .on('close', resolve);
         });
       })
       .then(function () {
