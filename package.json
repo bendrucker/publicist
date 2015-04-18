@@ -7,7 +7,7 @@
     "publish": "./src/index.js"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "standard"
   },
   "repository": {
     "type": "git",
@@ -35,5 +35,8 @@
     "packhorse": "~1.1.1",
     "semver": "~4.1.0",
     "yargs": "~1.3.3"
+  },
+  "devDependencies": {
+    "standard": "bendrucker/standard#babel"
   }
 }
