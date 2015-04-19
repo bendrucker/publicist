@@ -14,20 +14,17 @@ export function load () {
 }
 
 export function update (pack, version) {
-  return git.fetch()
-    .then((pack) => {
-      version = bump(pack.get('version'), version)
-      logger.log(`Bumping packages to ${chalk.magenta(version)}`)
-      return pack.set('version', version).write()
-    })
-    .tap((pack) => {
-      return git.add(pack.paths())
-    })
-    .tap(() => {
-      return git.commit({
-        m: `Release v${version}`
+    version = bump(pack.get('version'), version)
+    logger.log(`Bumping packages to ${chalk.magenta(version)}`)
+    pack.set('version', version).write()
+      .tap((pack) => {
+        return git.add(pack.paths())
       })
-    })
+      .tap(() => {
+        return git.commit({
+          m: `Release v${version}`
+        })
+      })
 }
 
 function bump (from, to) {
