@@ -2,7 +2,7 @@
 
 import Promise from 'bluebird'
 
-export function create (pack, config = {}) {
+export function create (pack, config = []) {
   return Promise.resolve(
     /*eslint-disable no-undef*/
     // https://github.com/babel/babel-eslint/issues/70
