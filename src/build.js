@@ -14,7 +14,7 @@ export function create (pack, config = []) {
     return [require(build.package), build.config]
   })
   .map(([plugin, config]) => {
-    return [pluginAPI(plugin), plugin.defaults(pack, config)]
+    return [pluginDefaults(plugin), plugin.defaults(pack, config)]
   })
   .map(([plugin, config]) => {
     return plugin.before(pack, config).return([plugin, config])
@@ -51,12 +51,19 @@ function configDefaults (name, config) {
   }, config)
 }
 
-function pluginAPI (plugin) {
+function pluginDefaults (plugin) {
   return Object.assign({}, plugin, {
-    before: noop,
-    build: noop,
-    after: noop
+    defaults: identity,
+    before: promiseNoop,
+    build: promiseNoop,
+    after: promiseNoop
   })
 }
 
-function noop () {}
+function promiseNoop () {
+  return Promise.resolve()
+}
+
+function identity (input) {
+  return input
+}
