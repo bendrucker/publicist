@@ -4,25 +4,26 @@ import chalk from 'chalk'
 import semver from 'semver'
 import packhorse from 'packhorse'
 import git from 'git-child'
-import log from './log'
+import logger from './log'
 
-export function update (version) {
+export function load () {
+  return packhorse.load([
+    'package.json',
+    {path: 'bower.json', optional: true}
+  ])
+}
+
+export function update (pack, version) {
   return git.fetch()
-    .then(function () {
-      return packhorse.load([
-        'package.json',
-        {path: 'bower.json', optional: true}
-      ])
-    })
-    .then(function (pack) {
+    .then((pack) => {
       version = bump(pack.get('version'), version)
-      log(`Bumping packages to ${chalk.magenta(version)}`)
+      logger.log(`Bumping packages to ${chalk.magenta(version)}`)
       return pack.set('version', version).write()
     })
-    .tap(function (pack) {
+    .tap((pack) => {
       return git.add(pack.paths())
     })
-    .tap(function () {
+    .tap(() => {
       return git.commit({
         m: `Release v${version}`
       })

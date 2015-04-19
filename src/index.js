@@ -9,7 +9,6 @@ import build from './build'
 import packages from './packages'
 import logger from './log'
 
-const config = require(resolve(cwd()), 'package.json').publicist
 let branch
 
 export function publish (version) {
@@ -21,7 +20,10 @@ export function publish (version) {
       return git.checkout('master')
     })
     .then(() => {
-      return packages.update(version)
+      return packages.load()
+    })
+    .tap((pack) => {
+      return packages.update(pack, version)
     })
     .tap((pack) => {
       return git.add(pack.paths())
@@ -39,7 +41,7 @@ export function publish (version) {
       })
     })
     .tap((pack) => {
-      return build.create(pack, config)
+      return build.create(pack, pack.get('publicist.builds'))
     })
     .tap(() => {
       return git.add('**/*')
