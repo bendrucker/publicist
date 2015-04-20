@@ -9,6 +9,8 @@ import build from './build'
 import packages from './packages'
 import logger from './log'
 
+export logger
+
 let branch
 
 export function publish (version) {
