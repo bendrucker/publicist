@@ -13,6 +13,9 @@ const argv = yargs
 
 const [version] = argv._
 
+publicist
+  .publish(version)
+  .catch(fail)
 
 function fail (err) {
   publicist.logger.error(chalk.red('Release failed'))

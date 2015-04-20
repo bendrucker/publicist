@@ -9,7 +9,7 @@ import build from './build'
 import packages from './packages'
 import logger from './log'
 
-export logger
+export {logger}
 
 let branch
 
