@@ -3,29 +3,24 @@
 import Promise from 'bluebird'
 
 export function create (pack, config = []) {
-  return Promise.resolve(
-    /*eslint-disable no-undef*/
-    // https://github.com/babel/babel-eslint/issues/70
-    parse(config)
-    /*eslint-enable no-undef*/
-  )
-  .map(buildDefaults)
-  .map((build) => {
-    return [require(build.package), build.config]
-  })
-  .map(([plugin, config]) => {
-    return [pluginDefaults(plugin), plugin.defaults(pack, config)]
-  })
-  .map(([plugin, config]) => {
-    return plugin.before(pack, config).return([plugin, config])
-  })
-  .map(([plugin, config]) => {
-    return plugin.build(pack, config).return([plugin, config])
-  })
-  .map(([plugin, config]) => {
-    return plugin.after(pack, config)
-  })
-  .then(() => pack.write())
+  return Promise.resolve(parse(config)) // eslint-disable-line no-undef (babel/babel-eslint#70)
+    .map(buildDefaults)
+    .map((build) => {
+      return [require(build.package), build.config]
+    })
+    .map(([plugin, config]) => {
+      return [pluginDefaults(plugin), plugin.defaults(pack, config)]
+    })
+    .each(([plugin, config]) => {
+      return plugin.before(pack, config)
+    })
+    .map(([plugin, config]) => {
+      return plugin.build(pack, config).return([plugin, config])
+    })
+    .each(([plugin, config]) => {
+      return plugin.after(pack, config)
+    })
+    .then(() => pack.write())
 }
 
 function parse (config) {
