@@ -2,9 +2,16 @@
 
 'use strict'
 
-import * as publicist from '../'
 import chalk from 'chalk'
 import yargs from 'yargs'
+import {sync as resolveSync} from 'resolve'
+import {cwd} from 'process'
+import {interopRequireWildcard} from 'babel-runtime/helpers'
+import pkg from './package.json'
+
+const {publish, logger} = interopRequireWildcard(require(resolveSync(pkg.name, {
+  basedir: cwd()
+})))
 
 const argv = yargs
   .usage('Increment packages and generate a tagged UMD build\nUsage: $0 <version|increment>')
