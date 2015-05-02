@@ -11,7 +11,7 @@ import logger from './log'
 
 export {logger}
 
-let branch
+let branch, tag
 
 export function publish (version) {
   return assertClean()
