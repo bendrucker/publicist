@@ -13,7 +13,7 @@ export {logger}
 
 let branch, tag
 
-export function publish (version) {
+export function release (version) {
   return assertClean()
     .then(() => {
       return git.fetch()
@@ -63,7 +63,8 @@ export function publish (version) {
       return git.commit(`v${version} Build`)
     })
     .tap(() => {
-      return git.tag(`v${version}`)
+      tag = `v${version}`
+      return git.tag(tag)
     })
     .tap(() => {
       return git.checkout('master')
@@ -74,6 +75,7 @@ export function publish (version) {
       })
     })
     .then((pack) => {
-      return logger.log(`Released ${pack.get('name')}@${pack.get('version')}`)
+      logger.log(`Released ${pack.get('name')}@${pack.get('version')}`)
+      return tag
     })
 }

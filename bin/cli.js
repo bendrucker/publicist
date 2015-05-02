@@ -21,7 +21,7 @@ const argv = yargs
 const [version] = argv._
 
 publicist
-  .publish(version)
+  .release(version)
   .catch(fail)
 
 function fail (err) {
