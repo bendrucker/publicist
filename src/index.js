@@ -22,6 +22,17 @@ export function publish (version) {
       return git.checkout('master')
     })
     .then(() => {
+      return git.revList({
+        _: 'HEAD..origin/master',
+        count: true
+      })
+      .call('trim')
+      .then(parseInt)
+    })
+    .then((count) => {
+      if (count) throw new Error('Remote is ahead of master')
+    })
+    .then(() => {
       return packages.load()
     })
     .tap((pack) => {
