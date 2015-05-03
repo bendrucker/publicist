@@ -4,11 +4,11 @@
   "description": "Generate and tag a UMD build for release on a separate branch",
   "main": "./src",
   "bin": {
-    "publicist": "./bin/index.js"
+    "publicist": "./bin/cli.js"
   },
   "scripts": {
     "test": "standard",
-    "build": "babel ./src -d ./lib"
+    "build": "babel ./src -d ./lib && babel ./bin -d ./lib/bin"
   },
   "repository": {
     "type": "git",
