@@ -3,7 +3,7 @@
 import Promise from 'bluebird'
 
 export function create (pack, config = []) {
-  return Promise.resolve(parse(config)) // eslint-disable-line no-undef (babel/babel-eslint#70)
+  return Promise.resolve(parse(config)) // eslint-disable-line no-undef
     .map(buildDefaults)
     .map((build) => {
       return [require(build.package), build.config]

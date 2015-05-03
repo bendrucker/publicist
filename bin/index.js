@@ -1,4 +1,4 @@
 #!/usr/bin/env node
 
-import 'babel/register'
-import './cli'
+require('babel/register')
+require('./cli')

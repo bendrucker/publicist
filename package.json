@@ -4,7 +4,7 @@
   "description": "Generate and tag a UMD build for release on a separate branch",
   "main": "./src",
   "bin": {
-    "publish": "./src/index.js"
+    "publicist": "./bin/index.js"
   },
   "scripts": {
     "test": "standard"
@@ -26,6 +26,7 @@
   },
   "homepage": "https://github.com/bendrucker/publicist",
   "dependencies": {
+    "babel": "~5.2.6",
     "babel-runtime": "~5.1.10",
     "bluebird": "^2.7.1",
     "browserify": "~8.1.1",

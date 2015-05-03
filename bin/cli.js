@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 'use strict'
 
 import chalk from 'chalk'
@@ -12,11 +10,6 @@ import pkg from './package.json'
 const publicist = interopRequireWildcard(require(resolveSync(pkg.name, {
   basedir: cwd()
 })))
-
-const argv = yargs
-  .usage('Increment packages and generate a tagged UMD build\nUsage: $0 <version|increment>')
-  .example('$0 patch', 'release a new patch version')
-  .argv
 
 const [command] = yargs
   .usage('$0 command || version')
@@ -31,7 +24,7 @@ if (command === 'release') {
     .usage('$0 release <version|increment>')
     .example('$0 release patch', 'release a new patch version')
 
-  return publicist.release(yargs.argv._[1]).catch(fail)
+  publicist.release(yargs.argv._[1]).catch(fail)
 }
 
 function fail (err) {
