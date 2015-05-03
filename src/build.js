@@ -2,6 +2,10 @@
 
 import Promise from 'bluebird'
 import git from 'git-child'
+import r from 'resolve'
+import {cwd} from 'process'
+
+const resolve = Promise.promisify(r)
 
 export function create (pack, config = []) {
   return Promise.resolve(parse(config)) // eslint-disable-line no-undef
@@ -9,8 +13,9 @@ export function create (pack, config = []) {
       if (!config.length) throw new Error('publicist configuration must contain at least one build')
     })
     .map(buildDefaults)
+    .map(packagePath)
     .map((build) => {
-      return [require(build.package), build.config]
+      return [require(build.packagePath), build.config]
     })
     .map(([plugin, config]) => {
       return [pluginDefaults(plugin), plugin.defaults(pack, config)]
@@ -58,6 +63,15 @@ function buildDefaults (build) {
   }, build)
 }
 
+function packagePath (build) {
+  return resolve(build.package, {
+    basedir: cwd()
+  })
+  .then(([path]) => {
+    return Object.assign({packagePath: path}, build)
+  })
+}
+
 function configDefaults (name, config) {
   return Object.assign({
     dest: `./release/${name}`
@@ -65,12 +79,12 @@ function configDefaults (name, config) {
 }
 
 function pluginDefaults (plugin) {
-  return Object.assign({}, plugin, {
+  return Object.assign({
     defaults: identity,
     before: promiseNoop,
     build: promiseNoop,
     after: promiseNoop
-  })
+  }, plugin)
 }
 
 function promiseNoop () {
