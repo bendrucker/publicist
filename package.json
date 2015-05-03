@@ -8,7 +8,7 @@
   },
   "scripts": {
     "test": "standard",
-    "build": "babel ./src -d ./lib && babel ./bin -d ./lib/bin"
+    "build": "babel ./src -d ./lib && babel ./bin -d ./lib-bin"
   },
   "repository": {
     "type": "git",
