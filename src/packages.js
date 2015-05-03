@@ -4,7 +4,7 @@ import chalk from 'chalk'
 import semver from 'semver'
 import packhorse from 'packhorse'
 import git from 'git-child'
-import logger from './log'
+import * as logger from './log'
 
 export function load () {
   return packhorse.load([
@@ -16,7 +16,7 @@ export function load () {
 export function update (pack, version) {
   version = bump(pack.get('version'), version)
   logger.log(`Bumping packages to ${chalk.magenta(version)}`)
-  pack.set('version', version).write()
+  return pack.set('version', version).write()
     .tap((pack) => {
       return git.add(pack.paths())
     })

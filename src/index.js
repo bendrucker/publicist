@@ -5,13 +5,13 @@ import {cwd} from 'process'
 import {resolve} from 'path'
 import git from 'git-child'
 import random from 'hat'
-import build from './build'
-import packages from './packages'
-import logger from './log'
+import * as build from './build'
+import * as packages from './packages'
+import * as logger from './log'
 
 export {logger}
 
-let branch, tag
+let pack, branch, tag
 
 export function release (version) {
   return assertClean()
@@ -35,36 +35,21 @@ export function release (version) {
     .then(() => {
       return packages.load()
     })
-    .tap((pack) => {
+    .then((_pack_) => {
+      pack = _pack_
       return packages.update(pack, version)
     })
-    .tap((pack) => {
-      return git.add(pack.paths())
-    })
-    .tap((pack) => {
-      version = pack.get('version')
-      return git.commit({
-        m: `Release v${version}`
-      })
-    })
-    .tap(() => {
-      branch = `release-${version}`
+    .then(() => {
+      branch = `release-${pack.get('version')}`
       return git.checkout({
         b: branch
       })
     })
-    .tap((pack) => {
+    .then(() => {
       return build.create(pack, pack.get('publicist.builds'))
     })
-    .tap(() => {
-      return git.add('**/*')
-    })
-    .tap(() => {
-      return git.commit(`v${version} Build`)
-    })
-    .tap(() => {
-      tag = `v${version}`
-      return git.tag(tag)
+    .then(() => {
+      return build.commit(pack)
     })
     .tap(() => {
       return git.checkout('master')
@@ -74,7 +59,7 @@ export function release (version) {
         D: branch
       })
     })
-    .then((pack) => {
+    .tap(() => {
       logger.log(`Released ${pack.get('name')}@${pack.get('version')}`)
       return tag
     })

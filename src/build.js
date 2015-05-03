@@ -1,9 +1,13 @@
 'use strict'
 
 import Promise from 'bluebird'
+import git from 'git-child'
 
 export function create (pack, config = []) {
   return Promise.resolve(parse(config)) // eslint-disable-line no-undef
+    .then((config) => {
+      if (!config.length) throw new Error('publicist configuration must contain at least one build')
+    })
     .map(buildDefaults)
     .map((build) => {
       return [require(build.package), build.config]
@@ -21,6 +25,20 @@ export function create (pack, config = []) {
       return plugin.after(pack, config)
     })
     .then(() => pack.write())
+}
+
+export function commit (pack) {
+  const version = pack.get('version')
+  return git.add('**/*')
+    .then(() => {
+      return git.commit({
+        m: `v${version} Build`
+      })
+    })
+    .then(() => {
+      const tag = `v${version}`
+      return git.tag(tag).return(tag)
+    })
 }
 
 function parse (config) {

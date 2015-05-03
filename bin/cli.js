@@ -19,7 +19,7 @@ const [command] = yargs
 
 if (command === 'release') {
   yargs
-    .demand(2, 'must provide a version')
+    .demand(1, 'must provide a version')
     .usage('$0 release <version|increment>')
     .example('$0 release patch', 'release a new patch version')
 
