@@ -5,7 +5,7 @@ import git from 'git-child'
 
 export function create (pack, config = []) {
   return Promise.resolve(parse(config)) // eslint-disable-line no-undef
-    .then((config) => {
+    .tap((config) => {
       if (!config.length) throw new Error('publicist configuration must contain at least one build')
     })
     .map(buildDefaults)
