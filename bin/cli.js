@@ -11,7 +11,7 @@ const publicist = require(resolveSync(pkg.name, {
 }))
 
 const [command] = yargs
-  .usage('$0 command || version')
+  .usage('$0 command')
   .command('release', 'generate and tag builds')
   .demand(1, 'must provide a command')
   .argv
