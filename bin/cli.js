@@ -4,12 +4,11 @@ import chalk from 'chalk'
 import yargs from 'yargs'
 import {sync as resolveSync} from 'resolve'
 import {cwd} from 'process'
-import {interopRequireWildcard} from 'babel-runtime/helpers'
-import pkg from './package.json'
+import pkg from '../package.json'
 
-const publicist = interopRequireWildcard(require(resolveSync(pkg.name, {
+const publicist = require(resolveSync(pkg.name, {
   basedir: cwd()
-})))
+}))
 
 const [command] = yargs
   .usage('$0 command || version')
