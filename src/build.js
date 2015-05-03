@@ -34,16 +34,18 @@ export function create (pack, config = []) {
 
 export function commit (pack) {
   const version = pack.get('version')
-  return git.add('**/*')
-    .then(() => {
-      return git.commit({
-        m: `v${version} Build`
-      })
+  return git.add({
+    all: true
+  })
+  .then(() => {
+    return git.commit({
+      m: `v${version} Build`
     })
-    .then(() => {
-      const tag = `v${version}`
-      return git.tag(tag).return(tag)
-    })
+  })
+  .then(() => {
+    const tag = `v${version}`
+    return git.tag(tag).return(tag)
+  })
 }
 
 function parse (config) {
