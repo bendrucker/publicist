@@ -3,12 +3,11 @@
 import chalk from 'chalk'
 import yargs from 'yargs'
 import {sync as resolveSync} from 'resolve'
-import {cwd} from 'process'
 import pkg from '../package.json'
+import requireModule from 'require-module'
 
-const publicist = require(resolveSync(pkg.name, {
-  basedir: cwd()
-}))
+const {cwd} = process
+const publicist = requireModule(pkg.name, cwd())
 
 const [command] = yargs
   .usage('$0 command')
