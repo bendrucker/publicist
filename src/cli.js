@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 'use strict'
 
 import chalk from 'chalk'
