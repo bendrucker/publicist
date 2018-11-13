@@ -1,6 +1,8 @@
 publicist
 ========================
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/bendrucker/publicist.svg)](https://greenkeeper.io/)
+
 publicist generates and tags a UMD build for releases of code that may be used in a browser outside of CommonJS. It automates a workaround for dealing with Bower and other package managers that use Git repositories instead of storing code in a registry like NPM. If you commit your builds to master, you:
 
 * pollute your commit history
